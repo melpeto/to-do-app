@@ -41,6 +41,7 @@ formElement.addEventListener('submit', function(e) {
 //** clicking on a task allows you to togglebetween checked vs unchecked (aka done or not done)
 
     //not setting this up inside the other submit event listener, bc then it would run every time the form is submitted. we only need this to happen when the boxes are checked
+    // want it to be only when the icon checkbox itself is clicked, not the whole li
     
     //we are selecting the li again bc we defined our liElement variable INSIDE the other function:
         // const listElements = document.querySelector('li');
@@ -50,6 +51,18 @@ formElement.addEventListener('submit', function(e) {
 
     // BUT ^this causes an error because the li doesn't exist yet!!
     //need EVENT PROPAGATION: we will delegate the responsibility of listening to this event to the (future)li's parent
+    const unorderedList = document.querySelector('ul');
+    unorderedList.addEventListener('click', function(e) {
+        console.log(e);  //if we look at the event object e which is 'click' we can see that it has properties we can use to find the checkbox. look inside the target object, and can see the i element has a localName = 'i' so we could use that
+        if (e.target.localName === 'i') {
+            console.log('checkbox was clicked!')
+            // toggle the classes on the target:
+            e.target.classList.toggle('fa-square-check') //does this class exist on the element? If not, add it. If it does, remove it.
+            e.target.classList.toggle('fa-square');  //does this class exist on the element? If not, add it. If it does, remove it.
+        }
+
+    });
+    //the 'this' keyword represents the object which owns the code that is currently running. "what code is running? Ok, what caused this code to run?"
 
 
 //BONUS?
